@@ -1,0 +1,22 @@
+{
+  "name": "api-clima",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "ts-node src/index.ts",
+    "build": "tsc"
+  },
+  "keywords": [],
+  "author": "Tatiana-Vega",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "jsonfile": "^6.1.0"
+  },
+  "devDependencies": {
+    "@types/jsonfile": "^6.1.4",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.3.2"
+  }
+}
