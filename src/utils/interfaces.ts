@@ -181,4 +181,9 @@ interface DataDaily {
   values: ValuesDaily;
 }
 
-export { Weather, Location, ValuesMinutely, ValuesHourly, ValuesDaily, DataMinutely, DataHourly, DataDaily};
+interface PressureLevelData {
+  pressureSurfaceLevel: number;
+  temperature: number;
+}
+
+export { Weather, Location, ValuesMinutely, ValuesHourly, ValuesDaily, DataMinutely, DataHourly, DataDaily, PressureLevelData};
