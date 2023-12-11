@@ -30,9 +30,9 @@ function getHourlyTemperatureAndHumidity(): { time: string, humidity: number, te
 }
 
 const probarFuncion = getHourlyTemperatureAndHumidity();
- console.table(probarFuncion);
+console.table(probarFuncion);
 
- const getPressureLevelByTemperature = (
+const getPressureLevelByTemperature = (
   temperature: number
 ): { pressureSurfaceLevel: number; temperature: number }[] | false => {
   const weatherData: interfaces.Weather | false = getDataWeather();
