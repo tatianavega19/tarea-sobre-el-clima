@@ -1,4 +1,7 @@
-import { HourlyTemperatureAndHumidity, pressureSurfaceLevelByTemperature } from '../interface/interfaces';
+import {
+  HourlyTemperatureAndHumidity,
+  pressureSurfaceLevelByTemperature,
+} from "../interface/Weather";
 import { getDataWeather } from "../utils/handleReadDb";
 
 const getHourlyTemperatureAndHumidity = ():
@@ -18,10 +21,6 @@ const getHourlyTemperatureAndHumidity = ():
 
   return mappedData;
 };
-
-
-const getHourly = getHourlyTemperatureAndHumidity();
-console.table(getHourly);
 
 const getPressureLevelByTemperature = (
   temperature: number
@@ -44,6 +43,4 @@ const getPressureLevelByTemperature = (
   return mappedData;
 };
 
-const tempTest: number = 8;
-const pressureLevels = getPressureLevelByTemperature(tempTest);
-console.table(pressureLevels);
+export { getHourlyTemperatureAndHumidity, getPressureLevelByTemperature };

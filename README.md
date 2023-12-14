@@ -51,3 +51,7 @@
    - **Modelo:** Exportar dos funciones:
      - `getHourlyTemperatureAndHumidity()`: Retorna una colección con objetos {time: '2023-07-21T14:00:00Z', humidity: 86, temperature: 13.26}.
      - `getPressureLevelByTemperature(temperature)`: Retorna una colección donde la propiedad `temperature` de los objetos que sea igual o mayor al valor recibido por parámetro. Los objetos tienen la forma {pressureSurfaceLeve: 1009.62, temperature: 21.25}.
+
+10. **Modo de uso:**
+   - Para ejecutar el módulo 1, escribir en la terminal: `npm run m1`.
+   - Para ejecutar el módulo 2 y obtener información, escribir en la terminal: `npm run m2 "temperatura"` (reemplazar "temperatura" con el número de temperatura deseado).
