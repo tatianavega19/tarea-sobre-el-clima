@@ -1,66 +1,49 @@
-import { readFileSync } from "node:fs";
-import { pathFile } from "../database/index";
-import * as interfaces from '../utils/interfaces';
+import { HourlyTemperatureAndHumidity, pressureSurfaceLevelByTemperature } from '../interface/interfaces';
+import { getDataWeather } from "../utils/handleReadDb";
 
-const getDataWeather = (): interfaces.Weather | false => {
-  const bufferData: Buffer = readFileSync(pathFile);
-  const parsedData: interfaces.Weather = JSON.parse(bufferData.toString());
-  return parsedData;
-};
+const getHourlyTemperatureAndHumidity = ():
+  | HourlyTemperatureAndHumidity[]
+  | undefined => {
+  const weatherData = getDataWeather();
 
-function getHourlyTemperatureAndHumidity(): { time: string, humidity: number, temperature: number }[] | false {
-  const weatherData: interfaces.Weather | false = getDataWeather();
-  if (!weatherData || !weatherData.timelines) {
-    return false;
+  if (!weatherData) {
+    return;
   }
 
-  let hourlyTimelines: interfaces.DataHourly[] | undefined;
-
-  if ('hourly' in weatherData.timelines) {
-    hourlyTimelines = weatherData.timelines.hourly as interfaces.DataHourly[];
-  } else {
-    return false;
-  }
-
-  return hourlyTimelines.map(timeline => ({
+  const mappedData = weatherData.timelines.hourly.map((timeline) => ({
     time: timeline.time,
     humidity: timeline.values.humidity,
-    temperature: timeline.values.temperature
+    temperature: timeline.values.temperature,
   }));
-}
 
-const probarFuncion = getHourlyTemperatureAndHumidity();
-console.table(probarFuncion);
+  return mappedData;
+};
+
+
+const getHourly = getHourlyTemperatureAndHumidity();
+console.table(getHourly);
 
 const getPressureLevelByTemperature = (
   temperature: number
-): { pressureSurfaceLevel: number; temperature: number }[] | false => {
-  const weatherData: interfaces.Weather | false = getDataWeather();
+): pressureSurfaceLevelByTemperature[] | undefined => {
+  const weatherData = getDataWeather();
 
-  if (!weatherData || !weatherData.timelines) {
-    return false;
+  if (!weatherData) {
+    return;
   }
 
-  let hourlyTimelines: interfaces.DataHourly[] | undefined;
+  const filterData = weatherData.timelines.hourly.filter(
+    (timeline) => timeline.values.temperature >= temperature
+  );
 
-  if ('hourly' in weatherData.timelines) {
-    hourlyTimelines = weatherData.timelines.hourly as interfaces.DataHourly[];
-  } else {
-    return false;
-  }
+  const mappedData = filterData.map((timeline) => ({
+    pressureSurfaceLevel: timeline.values.pressureSurfaceLevel,
+    temperature: timeline.values.temperature,
+  }));
 
-  if (!hourlyTimelines) {
-    return false;
-  }
-
-  return hourlyTimelines
-    .filter((timeline) => timeline.values.temperature >= temperature)
-    .map((timeline) => ({
-      pressureSurfaceLevel: timeline.values.pressureSurfaceLevel,
-      temperature: timeline.values.temperature,
-    }));
+  return mappedData;
 };
 
 const tempTest: number = 8;
-const probarPressureLevels = getPressureLevelByTemperature(tempTest);
-console.table(probarPressureLevels);
+const pressureLevels = getPressureLevelByTemperature(tempTest);
+console.table(pressureLevels);
